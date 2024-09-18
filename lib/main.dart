@@ -46,12 +46,10 @@ class HomeScreen extends StatelessWidget {
                           fontSize: 14,
                         ),
                       ),
-              const SizedBox(
-                height: 20,
-                width: double.infinity,
-          
-              ////////////////////////////////From Here
-          
+                    const SizedBox(
+                      height: 20,
+                      width: double.infinity,          
+              ////////////////////////////////From Here          
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -182,10 +180,8 @@ class HomeScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(12.0),
                 child: Divider(thickness: 1, color: Colors.deepOrange),
-              ),
-          
-              ////////////////////////////////Till Here
-              
+              ),          
+              ////////////////////////////////Till Here              
             ],
           ),
         ),
