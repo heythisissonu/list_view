@@ -202,28 +202,28 @@ List<Map<String, String>> coreExercises = <Map<String, String>> [
     'subtitle': '3 sets of 30-60 seconds',
     'description': 'Planks are excellent for strengthening the core. Start in a push-up position with your weight on your forearms and toes. Keep your body in a straight line from head to heels and hold the position.',
     'imageUrl': 'https://i.pinimg.com/originals/cf/b5/67/cfb5677a755fe7288b608a4fec6f09a0.gif',
-    'videoUrl': 'https://firebasestorage.googleapis.com/v0/b/home-workout-app-97640.appspot.com/o/Full%20Body%20Workout%2F02-mountain-climber.mp4?alt=media&token=9db16b10-4ab4-4b0c-b0fa-f0b850672360',
+    'videoUrl': 'https://i.pinimg.com/originals/cf/b5/67/cfb5677a755fe7288b608a4fec6f09a0.gif',
   },
   {
     'title': 'Russian Twists',
     'subtitle': '3 sets of 15-20 reps (each side)',
     'description': 'Russian Twists target the obliques and core. Sit on the floor with your knees bent, lean back slightly, and hold a weight with both hands. Twist your torso to each side, touching the weight to the floor.',
     'imageUrl': 'https://i.giphy.com/cpKD9u3S25xYL8tcbr.webp',
-    'videoUrl': 'https://firebasestorage.googleapis.com/v0/b/home-workout-app-97640.appspot.com/o/Full%20Body%20Workout%2F02-mountain-climber.mp4?alt=media&token=9db16b10-4ab4-4b0c-b0fa-f0b850672360',
+    'videoUrl': 'https://i.giphy.com/cpKD9u3S25xYL8tcbr.webp',
   },
   {
     'title': 'Bicycle Crunches',
     'subtitle': '3 sets of 15-20 reps (each side)',
     'description': 'Bicycle Crunches are great for the abs and obliques. Lie on your back, lift your legs and shoulders off the ground, and bring your opposite elbow to your opposite knee while alternating sides in a pedaling motion.',
     'imageUrl': 'https://gifdb.com/images/high/man-in-blue-doing-bicycle-crunches-exercise-bf3rojluw43kjlr2.gif',
-    'videoUrl': 'https://firebasestorage.googleapis.com/v0/b/home-workout-app-97640.appspot.com/o/Full%20Body%20Workout%2F02-mountain-climber.mp4?alt=media&token=9db16b10-4ab4-4b0c-b0fa-f0b850672360',
+    'videoUrl': 'https://gifdb.com/images/high/man-in-blue-doing-bicycle-crunches-exercise-bf3rojluw43kjlr2.gif',
   },
   {
     'title': 'Leg Raises',
     'subtitle': '3 sets of 10-15 reps',
     'description': 'Leg Raises are effective for the lower abs. Lie on your back with your legs straight, and lift them towards the ceiling while keeping them straight. Lower them back down without letting them touch the floor.',
     'imageUrl': 'https://cdn.jefit.com/assets/img/exercises/gifs/44.gif',
-    'videoUrl': 'https://firebasestorage.googleapis.com/v0/b/home-workout-app-97640.appspot.com/o/Full%20Body%20Workout%2F02-mountain-climber.mp4?alt=media&token=9db16b10-4ab4-4b0c-b0fa-f0b850672360',
+    'videoUrl': 'https://gifdb.com/images/high/man-in-blue-doing-bicycle-crunches-exercise-bf3rojluw43kjlr2.gif',
   },
 ];
 

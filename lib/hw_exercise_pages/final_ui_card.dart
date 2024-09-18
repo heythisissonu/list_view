@@ -56,6 +56,21 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
         title: Text(workout['title'] ?? 'Workout Detail'),
         backgroundColor: const Color.fromARGB(255, 22, 22, 22),
         foregroundColor: Colors.deepOrange,
+         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30, top: 5, bottom: 5, left: 10),
+            child: Center(
+              child: Text(
+                '${_currentIndex + 1}/${widget.workouts.length}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: GestureDetector(
         // Detect swipe gestures
@@ -72,32 +87,36 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300), // Animation duration
-              switchInCurve: Curves.easeInOut, // Curve for incoming widget
-              switchOutCurve: Curves.easeInOut, // Curve for outgoing widget
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                // Transition builder for animations
-                final offsetAnimation = Tween<Offset>(
-                  begin: Offset(_swipeDirection == -1 ? 1.0 : -1.0,
-                      0.0), // Incoming from left or right
-                  end: Offset.zero, // End at original position
-                ).animate(animation);
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300), // Animation duration
+                switchInCurve: Curves.easeInOut, // Curve for incoming widget
+                switchOutCurve: Curves.easeInOut, // Curve for outgoing widget
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  // Transition builder for animations
+                  final offsetAnimation = Tween<Offset>(
+                    begin: Offset(_swipeDirection == -1 ? 1.0 : -1.0, 0.0), // Incoming from left or right
+                    end: Offset.zero, // End at original position
+                  ).animate(animation);
 
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              },
+                  final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+
+                  return FadeTransition(
+                    opacity: opacityAnimation,
+                    child: SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    ),
+                  );
+                },
               child: SingleChildScrollView(
                 key: ValueKey<int>(_currentIndex), // Unique key for each child
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only( bottom: 16, left: 16, right: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (workout['videoUrl'] != null)
                       SizedBox(
-                        // Remove width to allow it to take up available space
+                        // Removed width to allow it to take up available space
                         height: MediaQuery.of(context).size.height / 2,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
@@ -107,7 +126,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                           ),
                         ),
                       ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 14),
                     Text(
                       workout['title'] ?? '',
                       style: const TextStyle(

@@ -33,7 +33,7 @@ class HomeWorkoutDetailedPage extends StatelessWidget {
                     end: Alignment.centerRight,
                     colors: [
                       const Color.fromARGB(255, 230, 63, 12).withOpacity(1.0), // DeepOrange with 100% opacity
-                      const Color.fromARGB(255, 29, 29, 29).withOpacity(0.1),  // Black with 10% opacity
+                      const Color.fromARGB(255, 77, 28, 0).withOpacity(0.1),  // Black with 10% opacity
                     ],
                   ),
                   border: Border.all(color: Colors.deepOrange, width: 1),
@@ -51,7 +51,7 @@ class HomeWorkoutDetailedPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 20),
                           Text(
                             data["title"]!,
                             style: const TextStyle(
@@ -61,12 +61,15 @@ class HomeWorkoutDetailedPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            data["description"]!,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white70,
-                              height: 1.0, // Line height - reduces the space between lines
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10, top: 5),
+                            child: Text(
+                              data["description"]!,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                                height: 1.0, // Line height - reduces the space between lines
+                              ),
                             ),
                           ),
                         ],
@@ -93,13 +96,13 @@ class HomeWorkoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(14), topLeft: Radius.circular(14)),
         image: DecorationImage(
           image: AssetImage(imagePath),
           fit: BoxFit.cover,
         ),
       ),
-      width: 100,
+      width: 120,
       height: 150,
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -110,7 +113,7 @@ class HomeWorkoutCard extends StatelessWidget {
             color: Colors.black54,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
+              //bottomRight: Radius.circular(16),
             ),
           ),
           child: Text(
