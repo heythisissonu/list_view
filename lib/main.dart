@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'imagecard.dart';
+import 'package:list_view/hw_exercise_pages/03_coreworkout.dart';
+import 'package:list_view/hw_exercise_pages/01_fullbody.dart';
+import 'package:list_view/hw_exercise_pages/04_lowerbody.dart';
+import 'package:list_view/hw_exercise_pages/02_upperbody.dart';
+import 'ui_imagecard.dart';
 import 'homeworkout_detailed_page.dart';
 
 void main() {
@@ -92,9 +96,59 @@ class HomeScreen extends StatelessWidget {
                 children: GradientImageCard.cardData.map((data) {
                   return Row(
                     children: [
-                      GradientImageCard(
-                        imagePath: data["imagePath"]!,
-                        title: data["title"]!,
+                      GestureDetector(
+                        onTap: () {
+                          switch (data["title"]) {
+                            case "Full Body":
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FullBodyPage(
+                                    title: data["title"]!,
+                                    description: data["description"]!,
+                                  ),
+                                ),
+                              );
+                              break;
+                            case "Upper Body":
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UpperBodyPage(
+                                    title: data["title"]!,
+                                    description: data["description"]!,
+                                  ),
+                                ),
+                              );
+                              break;
+                            case "Core Workout":
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CoreWorkoutPage(
+                                    title: data["title"]!,
+                                    description: data["description"]!,
+                                  ),
+                                ),
+                              );
+                              break;
+                            case "Lower Body":
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LowerBodyPage(
+                                    title: data["title"]!,
+                                    description: data["description"]!,
+                                  ),
+                                ),
+                              );
+                              break;
+                          }
+                        },
+                        child: GradientImageCard(
+                          imagePath: data["imagePath"]!,
+                          title: data["title"]!,
+                        ),
                       ),
                       const SizedBox(width: 16),
                     ],
@@ -102,6 +156,7 @@ class HomeScreen extends StatelessWidget {
                 }).toList(),
               ),
             ),
+            
             const Padding(
               padding: EdgeInsets.all(12.0),
               child: Divider(thickness: 1, color: Colors.deepOrange),
