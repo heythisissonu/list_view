@@ -1,21 +1,22 @@
-// full_body_page.dart
 import 'package:flutter/material.dart';
 import 'package:list_view/hw_exercise_pages/ui_card_design.dart';
 import 'exercises_data.dart';
-import 'final_ui_card.dart'; // Import the WorkoutDetailPage class
+import 'final_ui_card.dart';
 
-class FullBodyPage extends StatefulWidget {
+class UpperBodyPageQuads extends StatefulWidget {
   final String title;
   final String description;
 
-  const FullBodyPage({super.key, required this.title, required this.description});
+ // ignore: prefer_const_constructors_in_immutables
+  UpperBodyPageQuads({super.key, required this.title, required this.description});
 
-  @override
+
+ @override
   // ignore: library_private_types_in_public_api
-  _FullBodyPageState createState() => _FullBodyPageState();
+  _UpperBodyPageQuadsState createState() => _UpperBodyPageQuadsState();
 }
 
-class _FullBodyPageState extends State<FullBodyPage> {
+class _UpperBodyPageQuadsState extends State<UpperBodyPageQuads> {
   // Track which item is expanded
   int? _expandedIndex;
 
@@ -34,21 +35,21 @@ class _FullBodyPageState extends State<FullBodyPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: workouts.length,
+          itemCount: quadExercises.length,
           itemBuilder: (context, index) {
-            final data = workouts[index];
+            final data = quadExercises[index];
             final bool isExpanded = _expandedIndex == index;
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
-              child: GestureDetector(
-                // Detects taps without ripple effect
+              child: InkWell(
+                // Ripple effect on tap
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => WorkoutDetailPage(
-                        workouts: workouts,
+                        workouts: quadExercises,
                         currentIndex: index,
                       ),
                     ),

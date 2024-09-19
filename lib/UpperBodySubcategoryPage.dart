@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:list_view/LowerBodySubcategoryPage.dart';
-import 'package:list_view/UpperBodySubcategoryPage.dart';
-import 'package:list_view/hw_exercise_pages/01_fullbody.dart';
-import 'package:list_view/hw_exercise_pages/03_coreworkout.dart';
-import 'homeworkout_data.dart';
+import 'package:list_view/upperbody_data.dart';
+import 'package:list_view/hw_exercise_pages/02_01_back.dart';
+import 'package:list_view/hw_exercise_pages/02_02_chest.dart';
+import 'package:list_view/hw_exercise_pages/02_03_shoulders.dart';
+import 'package:list_view/hw_exercise_pages/02_04_biceps.dart';
+import 'package:list_view/hw_exercise_pages/02_05_triceps.dart';
 
-
-
-class HomeWorkoutDetailedPage extends StatelessWidget {
-  const HomeWorkoutDetailedPage({super.key});
+class Upperbodysubcategorypage extends StatelessWidget {
+  const Upperbodysubcategorypage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,45 +24,61 @@ class HomeWorkoutDetailedPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: cardData.length,
+          itemCount: upperBodyData.length,
           itemBuilder: (context, index) {
-            final data = cardData[index];
+            final data = upperBodyData[index];
 
             return GestureDetector(
               onTap: () {
                 // Handle navigation based on the title
-                if (data["title"] == "Full Body") {
+                if (data["title"] == "Chest") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FullBodyPage(
+                      builder: (context) => UpperBodyPageChest(
                         title: data["title"]!,
                         description: data["description"]!,
                       ),
                     ),
                   );
-                } else if (data["title"] == "Core Body") {
+                } else if (data["title"] == "Back") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CoreWorkoutPage(
+                      builder: (context) => UpperBodyPageBack(
                         title: data["title"]!,
                         description: data["description"]!,
                       ),
                     ),
                   );
-                } else if (data["title"] == "Upper Body") {
+                } else if (data["title"] == "Shoulders") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Upperbodysubcategorypage(),
+                      builder: (context) => UpperBodyPageShoulders(
+                        title: data["title"]!,
+                        description: data["description"]!,
+                      ),
                     ),
                   );
-                } else if (data["title"] == "Lower Body") {
+                } else if (data["title"] == "Biceps") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LowerBodySubcategoryPage(),
+                      builder: (context) => UpperBodyPageBiceps(
+                        title: data["title"]!,
+                        description: data["description"]!,
+                      ),
+                    ),
+                  );
+                } else if (data["title"] == "Triceps") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpperBodyPageTriceps(
+                        title: data["title"]!,
+                        description: data["description"]!,
+                      ),
                     ),
                   );
                 }

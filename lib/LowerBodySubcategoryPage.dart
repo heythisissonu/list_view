@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:list_view/LowerBodySubcategoryPage.dart';
-import 'package:list_view/UpperBodySubcategoryPage.dart';
-import 'package:list_view/hw_exercise_pages/01_fullbody.dart';
-import 'package:list_view/hw_exercise_pages/03_coreworkout.dart';
-import 'homeworkout_data.dart';
+import 'package:list_view/hw_exercise_pages/04_01_quads.dart';
+import 'package:list_view/hw_exercise_pages/04_02_ham_glutes.dart';
+import 'package:list_view/hw_exercise_pages/04_03_calves.dart';
+import 'package:list_view/lowerbody_data.dart';
 
+class LowerBodySubcategoryPage extends StatelessWidget {
+  const LowerBodySubcategoryPage({super.key});
 
-
-class HomeWorkoutDetailedPage extends StatelessWidget {
-  const HomeWorkoutDetailedPage({super.key});
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF151515), // Body background color
@@ -25,48 +22,44 @@ class HomeWorkoutDetailedPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: cardData.length,
+          itemCount: lowerBodyData.length,
           itemBuilder: (context, index) {
-            final data = cardData[index];
+            final data = lowerBodyData[index];
 
             return GestureDetector(
               onTap: () {
                 // Handle navigation based on the title
-                if (data["title"] == "Full Body") {
+                if (data["title"] == "Quads") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FullBodyPage(
+                      builder: (context) => UpperBodyPageQuads(
                         title: data["title"]!,
                         description: data["description"]!,
                       ),
                     ),
                   );
-                } else if (data["title"] == "Core Body") {
+                } else if (data["title"] == "Hamstrings & Glutes") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CoreWorkoutPage(
+                      builder: (context) => UpperBodyPageHam(
                         title: data["title"]!,
                         description: data["description"]!,
                       ),
                     ),
                   );
-                } else if (data["title"] == "Upper Body") {
+                } else if (data["title"] == "Calves") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Upperbodysubcategorypage(),
+                      builder: (context) => UpperBodyPageCalves(
+                        title: data["title"]!,
+                        description: data["description"]!,
+                      ),
                     ),
                   );
-                } else if (data["title"] == "Lower Body") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LowerBodySubcategoryPage(),
-                    ),
-                  );
-                }
+                } 
               },
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
