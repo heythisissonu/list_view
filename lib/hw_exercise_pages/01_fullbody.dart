@@ -91,6 +91,8 @@ class _FullBodyPageState extends State<FullBodyPage> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.deepOrange,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
                                 const SizedBox(height: 1),
                                 Text(
@@ -101,6 +103,8 @@ class _FullBodyPageState extends State<FullBodyPage> {
                                     color: Colors.white70,
                                     height: 1.0, // Line height - reduces the space between lines
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                 ),
                                 const SizedBox(height: 18),
                                 GestureDetector(

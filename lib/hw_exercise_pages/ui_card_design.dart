@@ -1,7 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class GradientListCard extends StatelessWidget {
   final String imageUrl;
@@ -9,15 +9,13 @@ class GradientListCard extends StatelessWidget {
   final String subtitle;
   final String videoUrl;
 
-
   const GradientListCard({
-    super.key,    
-    required this.title, 
-    required this.imageUrl, 
-    required this.subtitle, 
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.subtitle,
     required this.videoUrl,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +34,24 @@ class GradientListCard extends StatelessWidget {
           // Image inside the container
           ClipRRect(
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), bottomLeft: Radius.circular(14)),
-            child: Image.network(
-              imageUrl, // Use local image path
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
               width: double.infinity,
               height: double.infinity,
-              fit: BoxFit.cover, // Cover entire container
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
+              errorWidget: (context, url, error) => const Image(
+                image: AssetImage('lib/images/body/no_internet.webp'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           // Gradient and text stacked at the bottom of the image

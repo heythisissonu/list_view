@@ -18,12 +18,10 @@ class WorkoutDetailPage extends StatefulWidget {
   _WorkoutDetailPageState createState() => _WorkoutDetailPageState();
 }
 
-class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTickerProviderStateMixin {
+class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   PageController? _pageController;
   late int _currentIndex;
-
-  // Map to hold the keys for each image to manage reloads
-  Map<int, Key> _imageKeys = {};
+  final Map<int, Key> _imageKeys = {};
 
   @override
   void initState() {
@@ -31,7 +29,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTicker
     _currentIndex = widget.currentIndex;
     _pageController = PageController(initialPage: _currentIndex);
 
-    // Initialize the keys for each image
+    // Initialize keys for each image to manage reloads
     for (int i = 0; i < widget.workouts.length; i++) {
       _imageKeys[i] = UniqueKey();
     }
@@ -61,12 +59,6 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTicker
     }
   }
 
-  void _retryImageLoad(int index) {
-    setState(() {
-      // Generate a new key to force the CachedNetworkImage to reload
-      _imageKeys[index] = UniqueKey();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +113,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTicker
             itemBuilder: (context, index) {
               final workout = widget.workouts[index];
               return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(
+                    bottom: 16, left: 16, right: 16, top: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -131,7 +124,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTicker
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: CachedNetworkImage(
-                            key: _imageKeys[index], // Use the key here
+                            key: _imageKeys[index],
                             imageUrl: workout['videoUrl']!,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Shimmer.fromColors(
@@ -143,33 +136,9 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTicker
                                 width: double.infinity,
                               ),
                             ),
-                            errorWidget: (context, url, error) => Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.error_outline,
-                                  color: Colors.redAccent,
-                                  size: 48,
-                                ),
-                                const SizedBox(height: 8),
-                                const Text(
-                                  'Failed to load image',
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    _retryImageLoad(index);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.deepOrange,
-                                  ),
-                                  child: const Text('Retry'),
-                                ),
-                              ],
+                            errorWidget: (context, url, error) => Image.asset(
+                              'lib/images/body/no_internet.webp',
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
