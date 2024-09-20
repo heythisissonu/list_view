@@ -26,33 +26,31 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Column(            
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                      const Text(
-                        'Pavanputra - Fitness App',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        ),
-                      const SizedBox(height: 8),
-                      const Text(
-                          'One stop solution for all your fitness needs. We help you achieve your fitness goals.',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                          ),
-                        ),
-                      const SizedBox(
-                        height: 20,
-                        width: double.infinity,  
-                        ),
-                ////////////////////////////////Copy From Here          
-                
+                const Text(
+                  'Pavanputra - Fitness App',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'One stop solution for all your fitness needs. We help you achieve your fitness goals.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+
+                ///////////////////////////////////////Copy from here
+              
+                const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Divider(thickness: 1, color: Colors.deepOrange),
@@ -90,8 +88,19 @@ class HomeScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomeWorkoutDetailedPage(),
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) =>
+                                const HomeWorkoutDetailedPage(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(position: offsetAnimation, child: child);
+                            },
                           ),
                         );
                       },
@@ -120,53 +129,40 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              Widget page;
                               switch (data["title"]) {
                                 case "Full Body":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FullBodyPage(
-                                        title: data["title"]!,
-                                        description: data["description"]!,
-                                      ),
-                                    ),
-                                  );
+                                  page = FullBodyPage(title: data["title"]!, description: data["description"]!);
                                   break;
                                 case "Upper Body":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Upperbodysubcategorypage(
-                                        //title: data["title"]!,
-                                        //description: data["description"]!,
-                                      ),
-                                    ),
-                                  );
+                                  page = const Upperbodysubcategorypage();
                                   break;
                                 case "Core Workout":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CoreWorkoutPage(
-                                        title: data["title"]!,
-                                        description: data["description"]!,
-                                      ),
-                                    ),
-                                  );
+                                  page = CoreWorkoutPage(title: data["title"]!, description: data["description"]!);
                                   break;
                                 case "Lower Body":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      // ignore: prefer_const_constructors
-                                      builder: (context) => LowerBodySubcategoryPage(
-                                        //title: data["title"]!,
-                                        //description: data["description"]!,
-                                      ),
-                                    ),
-                                  );
+                                  page = const LowerBodySubcategoryPage();
                                   break;
+                                default:
+                                  return;
                               }
+
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation, secondaryAnimation) => page,
+                                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                    const begin = Offset(1.0, 0.0);
+                                    const end = Offset.zero;
+                                    const curve = Curves.easeInOut;
+
+                                    var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                    var offsetAnimation = animation.drive(tween);
+
+                                    return SlideTransition(position: offsetAnimation, child: child);
+                                  },
+                                ),
+                              );
                             },
                             child: GradientImageCard(
                               imagePath: data["imagePath"]!,
@@ -179,13 +175,11 @@ class HomeScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                
                 const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Divider(thickness: 1, color: Colors.deepOrange),
-                ),          
+                ),
                 ////////////////////////////////Till Here  
-                
               ],
             ),
           ),

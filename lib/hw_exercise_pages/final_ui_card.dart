@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class WorkoutDetailPage extends StatefulWidget {
   final List<Map<String, String>> workouts;
@@ -12,24 +14,27 @@ class WorkoutDetailPage extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _WorkoutDetailPageState createState() => _WorkoutDetailPageState();
 }
 
-class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
-  PageController? _pageController; // PageController initialized lazily
+class _WorkoutDetailPageState extends State<WorkoutDetailPage> with SingleTickerProviderStateMixin {
+  PageController? _pageController;
   late int _currentIndex;
+
+  // Map to hold the keys for each image to manage reloads
+  Map<int, Key> _imageKeys = {};
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.currentIndex;
+    _pageController = PageController(initialPage: _currentIndex);
 
-    // Delayed initialization of _pageController to avoid errors
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _pageController = PageController(initialPage: _currentIndex);
-      });
-    });
+    // Initialize the keys for each image
+    for (int i = 0; i < widget.workouts.length; i++) {
+      _imageKeys[i] = UniqueKey();
+    }
   }
 
   @override
@@ -56,18 +61,19 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
     }
   }
 
+  void _retryImageLoad(int index) {
+    setState(() {
+      // Generate a new key to force the CachedNetworkImage to reload
+      _imageKeys[index] = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_pageController == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0), // Custom height for the AppBar
+        preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: const Color.fromARGB(255, 22, 22, 22),
           foregroundColor: Colors.deepOrange,
@@ -81,9 +87,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   color: Colors.deepOrange,
                   fontWeight: FontWeight.bold,
                 ),
-              ),              
+              ),
               const SizedBox(height: 8),
-              // SmoothPageIndicator placed in the AppBar
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SmoothPageIndicator(
@@ -115,9 +120,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
             },
             itemBuilder: (context, index) {
               final workout = widget.workouts[index];
-
               return SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 8),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -126,9 +130,47 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                         height: MediaQuery.of(context).size.height / 2,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            workout['videoUrl']!,
+                          child: CachedNetworkImage(
+                            key: _imageKeys[index], // Use the key here
+                            imageUrl: workout['videoUrl']!,
                             fit: BoxFit.cover,
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.grey[800]!,
+                              highlightColor: Colors.grey[700]!,
+                              child: Container(
+                                color: Colors.grey[800],
+                                height: double.infinity,
+                                width: double.infinity,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.redAccent,
+                                  size: 48,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Failed to load image',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _retryImageLoad(index);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.deepOrange,
+                                  ),
+                                  child: const Text('Retry'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -167,7 +209,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
               );
             },
           ),
-          // Next/Previous buttons
+          // Navigation Buttons
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -177,42 +219,48 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (_currentIndex > 0)
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        iconSize: 28,
-                        color: Colors.white,
-                        style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all<Color>(const Color.fromARGB(255, 117, 117, 117)),
-                          padding: WidgetStateProperty.all<EdgeInsets>(
-                              const EdgeInsets.all(3)),
-                          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14)),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(14),
+                        onTap: _previousWorkout,
+                        child: Container(
+                          width: 70,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 117, 117, 117),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 28,
+                            color: Colors.white,
                           ),
                         ),
-                        onPressed: _previousWorkout,
                       ),
                     ),
-                  const SizedBox(width: 16), // Space between buttons
+                  const SizedBox(width: 16),
                   if (_currentIndex < widget.workouts.length - 1)
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_forward),
-                        iconSize: 28,
-                        color: Colors.white,
-                        style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all<Color>(Colors.deepOrange),
-                          padding: WidgetStateProperty.all<EdgeInsets>(
-                              const EdgeInsets.all(3)),
-                          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14)),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(14),
+                        onTap: _nextWorkout,
+                        child: Container(
+                          width: 70,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrange,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward,
+                            size: 28,
+                            color: Colors.white,
                           ),
                         ),
-                        onPressed: _nextWorkout,
                       ),
                     ),
                 ],
