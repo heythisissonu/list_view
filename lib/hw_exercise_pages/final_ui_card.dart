@@ -21,18 +21,13 @@ class WorkoutDetailPage extends StatefulWidget {
 class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   PageController? _pageController;
   late int _currentIndex;
-  final Map<int, Key> _imageKeys = {};
+  bool isExpanded = false; // State to toggle description expansion
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.currentIndex;
     _pageController = PageController(initialPage: _currentIndex);
-
-    // Initialize keys for each image to manage reloads
-    for (int i = 0; i < widget.workouts.length; i++) {
-      _imageKeys[i] = UniqueKey();
-    }
   }
 
   @override
@@ -41,10 +36,16 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
     super.dispose();
   }
 
+  void _toggleDescription() {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+  }
+
   void _nextWorkout() {
     if (_currentIndex < widget.workouts.length - 1) {
       _pageController?.nextPage(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
     }
@@ -53,12 +54,11 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   void _previousWorkout() {
     if (_currentIndex > 0) {
       _pageController?.previousPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +75,12 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
               Text(
                 widget.workouts[_currentIndex]['title'] ?? 'Workout Detail',
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 24,
                   color: Colors.deepOrange,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SmoothPageIndicator(
@@ -114,7 +114,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
               final workout = widget.workouts[index];
               return SingleChildScrollView(
                 padding: const EdgeInsets.only(
-                    bottom: 16, left: 16, right: 16, top: 8),
+                bottom: 16, left: 16, right: 16, top: 4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,9 +122,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 2,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(16.0),
                           child: CachedNetworkImage(
-                            key: _imageKeys[index],
                             imageUrl: workout['videoUrl']!,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Shimmer.fromColors(
@@ -143,42 +142,119 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                           ),
                         ),
                       ),
-                    const SizedBox(height: 14),
-                    Text(
-                      workout['title'] ?? '',
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      workout['subtitle'] ?? '',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.white70,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 60),
-                      child: Text(
-                        workout['description'] ?? '',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                          height: 1.2,
+                    const SizedBox(height: 10),
+                    Stack(
+                      children: [
+                        // Outer container for gradient border
+                        Container(
+                          padding: const EdgeInsets.all(2), // Space for the gradient border
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Colors.deepOrangeAccent,
+                                Color.fromARGB(0, 255, 38, 0),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(0),
+                            decoration: BoxDecoration(
+                              color: Colors.black, // Inner container background
+                              borderRadius: BorderRadius.circular(16),                              
+                            ),
+                            child: Container(
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                              colors: [
+                                Color.fromARGB(153, 129, 36, 7),
+                                Color.fromARGB(0, 255, 38, 0),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                            
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  workout['title'] ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    height: 0.90,
+                                    color: Colors.white,                                    
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  workout['subtitle'] ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    height: 0.90,
+                                    color: Color.fromARGB(209, 255, 255, 255),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 14),
+                                GestureDetector(
+                                  onTap: _toggleDescription,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      AnimatedCrossFade(
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        firstChild: Text(
+                                          workout['description'] ?? '',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white70,
+                                            height: 1.1,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        secondChild: Text(
+                                          workout['description'] ?? '',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white70,
+                                            height: 1.1,
+                                          ),
+                                        ),
+                                        crossFadeState: isExpanded
+                                            ? CrossFadeState.showSecond
+                                            : CrossFadeState.showFirst,
+                                      ),                                      
+                                         Text(
+                                          isExpanded ? 'see less...' : 'see more...',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.deepOrangeAccent,
+                                          ),
+                                        )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
               );
             },
           ),
-          // Navigation Buttons
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                // Displaying the GradientImageCards from cardData
+                // Displaying the GradientImageCards from cardData from ui_imagecard.dart
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -179,7 +179,7 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.all(12.0),
                   child: Divider(thickness: 1, color: Colors.deepOrange),
                 ),
-                ////////////////////////////////Till Here  
+                ////////////////////////////////  Till Here  
               ],
             ),
           ),
