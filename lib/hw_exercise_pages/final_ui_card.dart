@@ -121,6 +121,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                     if (workout['videoUrl'] != null)
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 2,
+                        width: double.infinity,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child: CachedNetworkImage(
