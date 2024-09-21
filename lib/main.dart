@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import 'package:list_view/LowerBodySubcategoryPage.dart';
 import 'package:list_view/UpperBodySubcategoryPage.dart';
 import 'package:list_view/hw_exercise_pages/03_coreworkout.dart';
@@ -104,19 +105,27 @@ class HomeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.deepOrange,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
+                      child: Transform.rotate(
+                        angle: -45 * (math.pi / 180), // Rotate -45 degrees
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.deepOrange, // Border color
+                              width: 1, // Border width
+                            ),
+                            color: Colors.transparent, // No fill color
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.deepOrange, // Icon color matching the border
+                            size: 36,
+                          ),
                         ),
                       ),
-                    ),
+                    ),                    
                   ],
                 ),
                 const SizedBox(height: 16),

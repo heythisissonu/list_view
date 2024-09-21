@@ -51,7 +51,7 @@ static const List<Map<String, String>> cardData = [
         children: [
           // Image inside the container
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
             child: Image.asset(
               imagePath, // Use local image path
               cacheWidth: 200,
@@ -67,7 +67,7 @@ static const List<Map<String, String>> cardData = [
             child: Container(
               height: 100, // Adjust height of the gradient
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(18),
                 gradient: LinearGradient(
                   colors: [
                     const Color.fromARGB(255, 255, 60, 0).withOpacity(1), // Orange at 100% opacity
