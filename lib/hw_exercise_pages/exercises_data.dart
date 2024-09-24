@@ -79,20 +79,21 @@ final List<Map<String, String>> backexercises = <Map<String, String>>[
     'videoUrl': 'https://sportcoaching.co.nz/wp-content/uploads/2021/02/Reverse-Snow-Angels.gif',
   },
   {
-    'title': 'Backpack Rows',
+    'title': 'Resistance Band Rows',
     'subtitle': '3 sets of 8-12 reps',
-    'description': 'Backpack Rows are effective using a weighted backpack. Fill a backpack with books or other heavy items. Hold the backpack with both hands, bend at the waist with your knees slightly bent, and pull the backpack towards your chest, squeezing your shoulder blades together.',
-    'imageUrl': 'https://www.mitrecsports.com/assets/Travel-Workout-_-Gif-5.gif',
-    'videoUrl': 'https://www.mitrecsports.com/assets/Travel-Workout-_-Gif-5.gif',
+    'description': 'Resistance Band Rows work the mid-back and improve posture. Attach a resistance band to a stable point, hold the ends, and step back to create tension. Pull the band towards your torso, squeezing your shoulder blades together, then return to the starting position.',
+    'imageUrl': 'https://cdn.mos.cms.futurecdn.net/BJgnndoycoPTELhKNvXLpj-1200-80.jpg',
+    'videoUrl': 'https://cdn.mos.cms.futurecdn.net/BJgnndoycoPTELhKNvXLpj-1200-80.jpg',
   },
   {
-    'title': 'Prone Pulls',
+    'title': 'Cobra Pose',
     'subtitle': '3 sets of 12-15 reps',
-    'description': 'Prone Pulls focus on the upper back and rear shoulders. Lie face down with arms extended in front of you. Lift your chest off the ground and pull your elbows back, bringing your hands towards your shoulders, then extend your arms forward again.',
-    'imageUrl': 'https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/02/400x400_Bodyweight_Back_Exercises_Prone_Pull.gif',
-    'videoUrl': 'https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/02/400x400_Bodyweight_Back_Exercises_Prone_Pull.gif',
+    'description': 'Cobra Pose is a yoga-based movement that stretches and strengthens the lower back. Lie face down with your hands under your shoulders, then gently lift your chest while keeping your hips on the ground. Hold briefly and lower back down.',
+    'imageUrl': 'https://media1.popsugar-assets.com/files/thumbor/GoUPEd0OujA2bVnVEa38SDJvdoY/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2015/03/06/854/n/1922729/98cf491b_Edit_img_facebook_post_image_file_29015915_1425576900_Cobra/i/Cobra-Pose.jpg',
+    'videoUrl': 'https://media1.popsugar-assets.com/files/thumbor/GoUPEd0OujA2bVnVEa38SDJvdoY/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2015/03/06/854/n/1922729/98cf491b_Edit_img_facebook_post_image_file_29015915_1425576900_Cobra/i/Cobra-Pose.jpg',
   },
 ];
+
 
 //List 04 - Shoulders home workouts - Main Category Upper Body
 final List<Map<String, String>> shoulderexercises = <Map<String, String>>[
