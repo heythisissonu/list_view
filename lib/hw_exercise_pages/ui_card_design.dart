@@ -77,7 +77,7 @@ class GradientListCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    title, // Use dynamic title
+                    title.length > 20 ? '${title.substring(0, 20)}...' : title, // Use dynamic title
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,

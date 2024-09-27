@@ -72,13 +72,15 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
           flexibleSpace: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                widget.workouts[_currentIndex]['title'] ?? 'Workout Detail',
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.deepOrange,
-                  fontWeight: FontWeight.bold,
-                ),
+                  Text(
+                    (widget.workouts[_currentIndex]['title']?.length ?? 0) > 20 
+                      ? '${widget.workouts[_currentIndex]['title']!.substring(0, 20)}...' 
+                      : widget.workouts[_currentIndex]['title'] ?? 'Workout Detail',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.deepOrange,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 4),
               Padding(
@@ -118,14 +120,14 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (workout['videoUrl'] != null)
+                    if (workout['imageUrl'] != null) //instead of videoUrl, currently using ImageURL, cause both contains same URLs
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 2,
                         width: double.infinity,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child: CachedNetworkImage(
-                            imageUrl: workout['videoUrl']!,
+                            imageUrl: workout['imageUrl']!, //instead of videoUrl, currently using ImageURL, cause both contains same URLs
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Shimmer.fromColors(
                               baseColor: Colors.grey[800]!,
@@ -148,22 +150,22 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                       children: [
                         // Outer container for gradient border
                         Container(
-                          padding: const EdgeInsets.all(2), // Space for the gradient border
+                          padding: const EdgeInsets.all(1), // Space for the gradient border
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
                                 Colors.deepOrangeAccent,
-                                Color.fromARGB(0, 255, 38, 0),
+                                Color.fromARGB(174, 15, 15, 15),
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(17),
                           ),
                           child: Container(
                             padding: const EdgeInsets.all(0),
                             decoration: BoxDecoration(
-                              color: Colors.black, // Inner container background
+                              color: const Color.fromARGB(255, 15, 15, 15), // Inner container background
                               borderRadius: BorderRadius.circular(16),                              
                             ),
                             child: Container(
@@ -171,8 +173,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                               colors: [
-                                Color.fromARGB(153, 129, 36, 7),
-                                Color.fromARGB(0, 255, 38, 0),
+                                Color.fromARGB(117, 129, 35, 7),
+                                Color.fromARGB(255, 15, 15, 15),
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,

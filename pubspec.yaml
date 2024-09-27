@@ -68,7 +68,15 @@ flutter:
     - lib/images/body/02-upperbody.webp
     - lib/images/body/03-middlebody.webp
     - lib/images/body/04-lowerbody.webp
-    - lib/images/body/no_internet.webp    
+    - lib/images/body/no_internet.webp 
+    - lib/images/thumb/01-chest.jpg
+    - lib/images/thumb/02-back.jpg
+    - lib/images/thumb/03-shoulders.jpg
+    - lib/images/thumb/04-biceps.jpg
+    - lib/images/thumb/05-triceps.jpg
+    - lib/images/thumb/06-quads.jpg
+    - lib/images/thumb/07-glutes-hams.jpg
+    - lib/images/thumb/08-calves.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

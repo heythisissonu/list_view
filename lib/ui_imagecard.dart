@@ -70,8 +70,8 @@ static const List<Map<String, String>> cardData = [
                 borderRadius: BorderRadius.circular(18),
                 gradient: LinearGradient(
                   colors: [
-                    const Color.fromARGB(255, 255, 60, 0).withOpacity(1), // Orange at 100% opacity
-                    const Color.fromARGB(255, 255, 81, 0).withOpacity(0), // Orange at 0% opacity
+                    const Color.fromARGB(255, 214, 50, 0).withOpacity(1), // Orange at 100% opacity
+                    const Color.fromARGB(255, 184, 58, 0).withOpacity(0), // Orange at 0% opacity
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
